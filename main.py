@@ -1,2 +1,4 @@
+from program import program_loop
+
 if __name__ == '__main__':
-    print('hello')
+    program_loop.run()

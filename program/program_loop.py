@@ -1,12 +1,10 @@
+# imports
+from program import booking_system as bs
+
 # global variables
-DAY1_PRICE = 850
-DAY2_PRICE = 850
-WEEKEND_CAMP_PRICE = 2000
-DAY1_NUMBER_OF_TICKETS = 50
-DAY2_NUMBER_OF_TICKETS = 50
-WEEKEND_CAMP_NUMBER_OF_TICKETS = 10
-FILE_PATH_TO_SUMMARY = 'music_festival_docs/booking_data/'
+FILE_PATH_TO_BOOKINGS = 'music_festival_docs/booking_data/booking_2024.txt'
 FILE_PATH_TO_CUSTOMER_DETAILS = 'music_festival_docs/customer_details/'
+TICKETS = bs.load_tickets(file_path=FILE_PATH_TO_BOOKINGS)
 
 
 def get_answ(prompt: str):
@@ -113,18 +111,20 @@ def make_booking():
     print(get_label(prog_name='MUSIC FARM FESTIVAL (BOOKING)'))
     name = get_proper_str(prompt='Enter your full name: >> ', end=15)
     phone_num = get_proper_str(prompt='Enter your phone number: >> ', end=10)
-    print(get_menu(prompt='Choose the ticket type:', menu_items_list=['Day 1', 'Day 2', 'Weekend-Camp']))
+    print(get_menu(prompt='Choose the ticket type:', menu_items_list=['Day1', 'Day2', 'Weekend-Camp']))
     user_choice = get_pos_int(prompt='=>   ', end=3)
     ticket_type, price = get_ticket_type(user_choice)
     group_size = get_pos_int(prompt='How many people in your group? >> ', end=4)
     dining = get_answ(prompt='Do you require fine dining pass (Y/N)? >> ')
+    bs.sell_ticket(FILE_PATH_TO_BOOKINGS, TICKETS, ticket_type, group_size)
+    bs.save_tickets(FILE_PATH_TO_BOOKINGS, TICKETS)
     total = calc_total(price, dining, group_size)
     print_receipt(name, ticket_type, group_size, dining, total)
 
 
 def review_booking():
     print(get_label(prog_name='MUSIC FARM FESTIVAL - SUMMARY'))
-    print_summary()
+    bs.show_tickets(TICKETS)
 
 
 def execute_func(user_choice):

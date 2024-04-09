@@ -1,4 +1,3 @@
-
 def load_tickets(file_path, num_elements):
     tickets = []
     try:
@@ -21,7 +20,6 @@ def update_and_save_dining(file_path, dinings, dining_type, group_size):
     with open(file_path, 'w') as file:
         for item in dinings:
             file.write(','.join(item) + '\n')
-
 
 
 def save_tickets(file_path, tickets):
@@ -57,9 +55,12 @@ def create_sale_file(name, ticket_type, phone_number, group_size, total, is_dini
 def sell_ticket(file_path, tickets, ticket_type, quantity, total, name, phone_number, is_dining=False):
     for ticket in tickets:
         if ticket[0] == ticket_type:
+            print(quantity)
             available = int(ticket[2]) - int(ticket[3])
+            print(available)
             if quantity > available:
                 print("Cannot sell tickets. Exceeds the maximum available.")
+                raise ValueError
             else:
                 ticket[3] = str(int(ticket[3]) + quantity)
                 save_tickets(file_path, tickets)

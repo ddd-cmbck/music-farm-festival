@@ -55,5 +55,3 @@ Follow the on-screen prompts to navigate through the booking process. Options in
 ### Reviewing Bookings
 
 Select the option to review current bookings to see a summary of ticket sales and dining arrangements.
-
-This project is licensed under the MIT License - see the LICENSE file for details.

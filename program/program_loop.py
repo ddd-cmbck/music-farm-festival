@@ -122,7 +122,6 @@ def make_booking():
 
     # Calculate total cost and process booking
     total = calc_total(price, dining, group_size)
-    TICKET_TOTALS.append(total)
     bs.sell_ticket(FILE_PATH_TO_BOOKINGS, TICKETS, ticket_type, group_size, total, name, phone_num, dining)
     bs.update_group_file(FILE_PATH_TO_GROUPS, name, group_size)
 

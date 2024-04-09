@@ -1,4 +1,4 @@
-def load_tickets(file_path, num_elements):
+def load_items(file_path, num_elements):
     tickets = []
     try:
         with open(file_path, 'r') as file:
@@ -22,10 +22,10 @@ def update_and_save_dining(file_path, dinings, dining_type, group_size):
             file.write(','.join(item) + '\n')
 
 
-def save_tickets(file_path, tickets):
+def save_items(file_path, items):
     with open(file_path, 'w') as file:
-        for ticket in tickets:
-            line = ','.join(ticket) + '\n'
+        for item in items:
+            line = ','.join(item) + '\n'
             file.write(line)
 
 
@@ -42,6 +42,12 @@ def show_dining(dinings):
         print(f"{dining_type} - Sold: {sold_dinings}")
 
 
+def show_groups(groups):
+    for group in groups:
+        group_name, group_size = group
+        print(f'{group_name}, Group Size: {group_size}')
+
+
 def create_sale_file(name, ticket_type, phone_number, group_size, total, is_dining):
     file_name = f"music_festival_docs/customer_details/{name.replace(' ', '_')}_sale.txt"
     with open(file_name, 'w') as file:
@@ -52,18 +58,21 @@ def create_sale_file(name, ticket_type, phone_number, group_size, total, is_dini
         file.write("Fine Dining Included: Yes" if is_dining else "Fine Dining Included: No")
 
 
+def update_group_file(file_path, group_name, group_size):
+    with open(file_path, 'a') as file:
+        file.write(f'{group_name},{group_size}\n')
+
+
 def sell_ticket(file_path, tickets, ticket_type, quantity, total, name, phone_number, is_dining=False):
     for ticket in tickets:
         if ticket[0] == ticket_type:
-            print(quantity)
             available = int(ticket[2]) - int(ticket[3])
-            print(available)
             if quantity > available:
                 print("Cannot sell tickets. Exceeds the maximum available.")
-                raise ValueError
+                break
             else:
                 ticket[3] = str(int(ticket[3]) + quantity)
-                save_tickets(file_path, tickets)
+                save_items(file_path, tickets)
             create_sale_file(name, ticket_type, phone_number, quantity, total, is_dining)
             break
     else:
